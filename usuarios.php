@@ -89,6 +89,7 @@
         </div>
     </div>
 
+
     <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR USUARIO -->
     <div class="modal" id="userDeleteModal">
         <div class="modal-content">
@@ -102,6 +103,7 @@
 
     <script src="assets/js/libros.js"></script>
     <script src="assets/js/usuarios.js"></script>
+    
 </body>
 
 </html>
