@@ -117,9 +117,17 @@ document.addEventListener('DOMContentLoaded', function() {
         searchUserInput.addEventListener('keyup', function() {
             const filter = this.value.toLowerCase();
             document.querySelectorAll('#tbodyUsuarios tr').forEach(row => {
-                const name = row.children[1].textContent.toLowerCase();
+                const id = row.children[0].textContent.toLowerCase();
+                const nombre = row.children[1].textContent.toLowerCase();
                 const email = row.children[2].textContent.toLowerCase();
-                row.style.display = (name.includes(filter) || email.includes(filter)) ? '' : 'none';
+                const telefono = row.children[3].textContent.toLowerCase();
+                
+                const matches = id.includes(filter) || 
+                               nombre.includes(filter) || 
+                               email.includes(filter) || 
+                               telefono.includes(filter);
+                
+                row.style.display = matches ? '' : 'none';
             });
         });
     }

@@ -3,14 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Biblioteca</title>
+    <title>Panel - Biblioteca</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="assets/css/styles.css">
 
 </head>
-
 <body>
     <header class="navbar">
         <button class="btn-menu-toggle" onclick="toggleSideMenu()">
@@ -34,18 +33,20 @@
             <div class="side-menu-content">
                 <h4>Panel de Control</h4>
                 <ul class="side-links">
-                    <li><a href="libros.php">Libros</a></li>
-                    <li><a href="usuarios.php">Usuarios</a></li>
+                    <li><a href="panel.php#libros" onclick="switchTab('libros')">Libros</a></li>
+                    <li><a href="panel.php#usuarios" onclick="switchTab('usuarios')">Usuarios</a></li>
                 </ul>
             </div>
         </div>
     </header>
-    <div id="toast" class="toast"></div>
 
-    <div class="table-container">
+    <div id="toast" class="toast"></div>  <!-- Contenedor para notificaciones -->
+
+    <!-- SECCIÓN LIBROS -->
+    <div class="table-container" id="librosSection">
         <div class="table-header">
             <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Buscar por ISBN..." />
+                <input type="text" id="searchInput" placeholder="Buscar libro..." />
                 <i class="bi bi-search"></i>
             </div>
             <a href="#" class="btn-add" onclick="openAddModal()">AGREGAR</a>
@@ -65,6 +66,31 @@
         </table>
     </div>
 
+    <!-- SECCIÓN USUARIOS -->
+    <div class="table-container" id="usuariosSection" style="display: none;">
+        <div class="table-header">
+            <div class="search-box">
+                <input type="text" id="searchUserInput" placeholder="Buscar usuario..." />
+                <i class="bi bi-search"></i>
+            </div>
+            <a href="#" class="btn-add" id="btnAddUser">AGREGAR USUARIO</a>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tbodyUsuarios"></tbody>
+        </table>
+    </div>
+
+    <!-- MODAL LIBRO -->
     <div class="modal" id="formModal">
         <div class="modal-content">
             <h3 id="modalTitle">Agregar libro</h3>
@@ -95,12 +121,52 @@
         </div>
     </div>
 
+    <!-- MODAL ELIMINAR LIBRO -->
     <div class="modal" id="deleteModal">
         <div class="modal-content">
             <h3>¿Está seguro que desea eliminar este libro?</h3>
             <div class="modal-buttons">
                 <button class="btn-confirm" onclick="confirmDelete()">Sí</button>
                 <button class="btn-cancel" onclick="closeDeleteModal()">No</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL USUARIO -->
+    <div class="modal" id="userModal">
+        <div class="modal-content">
+            <h3 id="userModalTitle">Agregar usuario</h3>
+            <input type="hidden" id="userId">
+
+            <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" id="userNombre">
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="userEmail">
+            </div>
+
+            <div class="form-group">
+                <label>Teléfono</label>
+                <input type="text" id="userTelefono">
+            </div>
+
+            <div class="modal-buttons">
+                <button class="btn-confirm" id="saveUserBtn">Guardar</button>
+                <button class="btn-cancel" onclick="document.getElementById('userModal').style.display='none'">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL ELIMINAR USUARIO -->
+    <div class="modal" id="userDeleteModal">
+        <div class="modal-content">
+            <h3 class="warning">¿Está seguro que desea eliminar este usuario?</h3>
+            <div class="modal-buttons">
+                <button class="btn-confirm" id="confirmDeleteUserBtn">Sí</button>
+                <button class="btn-cancel" onclick="document.getElementById('userDeleteModal').style.display='none'">No</button>
             </div>
         </div>
     </div>
@@ -132,7 +198,29 @@
         </div>
     </div>
 
+    <script>
+        // Función para cambiar de pestaña desde el menú
+        function switchTab(tab) {
+            const librosSection = document.getElementById('librosSection');
+            const usuariosSection = document.getElementById('usuariosSection');
+
+            if (tab === 'libros') {
+                librosSection.style.display = 'block';
+                usuariosSection.style.display = 'none';
+            } else if (tab === 'usuarios') {
+                librosSection.style.display = 'none';
+                usuariosSection.style.display = 'block';
+            }
+        }
+
+        // Detectar hash en la URL
+        window.addEventListener('load', function() {
+            const hash = window.location.hash.substr(1) || 'libros';
+            switchTab(hash);
+        });
+    </script>
     <script src="assets/js/libros.js"></script>
+    <script src="assets/js/usuarios.js"></script>
 </body>
 
 </html>

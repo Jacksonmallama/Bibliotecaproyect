@@ -139,7 +139,16 @@
                 let filter = this.value.toLowerCase();
                 document.querySelectorAll('#tbodyLibros tr').forEach(row => {
                     let isbn = row.children[0].textContent.toLowerCase();
-                    row.style.display = isbn.includes(filter) ? '' : 'none';
+                    let nombre = row.children[1].textContent.toLowerCase();
+                    let autor = row.children[2].textContent.toLowerCase();
+                    let year = row.children[3].textContent.toLowerCase();
+                    
+                    let matches = isbn.includes(filter) || 
+                                 nombre.includes(filter) || 
+                                 autor.includes(filter) ||
+                                 year.includes(filter);
+                    
+                    row.style.display = matches ? '' : 'none';
                 });
             });
         }
