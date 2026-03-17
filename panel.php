@@ -35,6 +35,7 @@
                 <ul class="side-links">
                     <li><a href="panel.php#libros" onclick="switchTab('libros')">Libros</a></li>
                     <li><a href="panel.php#usuarios" onclick="switchTab('usuarios')">Usuarios</a></li>
+                    <li><a href="panel.php#prestamos" onclick="switchTab('prestamos')">Préstamos</a></li>
                 </ul>
             </div>
         </div>
@@ -87,6 +88,32 @@
                 </tr>
             </thead>
             <tbody id="tbodyUsuarios"></tbody>
+        </table>
+    </div>
+
+    <!-- SECCIÓN PRÉSTAMOS -->
+    <div class="table-container" id="prestamosSection" style="display: none;">
+        <div class="table-header">
+            <div class="search-box">
+                <input type="text" id="searchPrestamosInput" placeholder="Buscar préstamo..." />
+                <i class="bi bi-search"></i>
+            </div>
+            <a href="#" class="btn-add" id="btnAddPrestamo">AGREGAR PRÉSTAMO</a>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Usuario</th>
+                    <th>Libro</th>
+                    <th>Fecha préstamo</th>
+                    <th>Fecha devolución</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tbodyPrestamos"></tbody>
         </table>
     </div>
 
@@ -160,6 +187,42 @@
         </div>
     </div>
 
+    <!-- MODAL PRÉSTAMO -->
+    <div class="modal" id="prestamoModal">
+        <div class="modal-content">
+            <h3 id="prestamoModalTitle">Agregar préstamo</h3>
+            <input type="hidden" id="prestamoId">
+            <input type="hidden" id="prestamoEstado" value="prestado">
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Usuario</label>
+                    <select id="prestamoUsuario"></select>
+                </div>
+
+                <div class="form-group">
+                    <label>Libro</label>
+                    <select id="prestamoLibro"></select>
+                </div>
+
+                <div class="form-group">
+                    <label>Fecha préstamo</label>
+                    <input type="date" id="prestamoFecha" />
+                </div>
+
+                <div class="form-group">
+                    <label>Fecha devolución</label>
+                    <input type="date" id="prestamoFechaDevolucion" />
+                </div>
+            </div>
+
+            <div class="modal-buttons">
+                <button class="btn-confirm" id="savePrestamoBtn">Guardar</button>
+                <button class="btn-cancel" onclick="document.getElementById('prestamoModal').style.display='none'">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- MODAL ELIMINAR USUARIO -->
     <div class="modal" id="userDeleteModal">
         <div class="modal-content">
@@ -203,13 +266,18 @@
         function switchTab(tab) {
             const librosSection = document.getElementById('librosSection');
             const usuariosSection = document.getElementById('usuariosSection');
+            const prestamosSection = document.getElementById('prestamosSection');
+
+            librosSection.style.display = 'none';
+            usuariosSection.style.display = 'none';
+            prestamosSection.style.display = 'none';
 
             if (tab === 'libros') {
                 librosSection.style.display = 'block';
-                usuariosSection.style.display = 'none';
             } else if (tab === 'usuarios') {
-                librosSection.style.display = 'none';
                 usuariosSection.style.display = 'block';
+            } else if (tab === 'prestamos') {
+                prestamosSection.style.display = 'block';
             }
         }
 
@@ -221,6 +289,7 @@
     </script>
     <script src="assets/js/libros.js"></script>
     <script src="assets/js/usuarios.js"></script>
+    <script src="assets/js/prestamos.js"></script>
 </body>
 
 </html>

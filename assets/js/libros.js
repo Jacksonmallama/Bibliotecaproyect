@@ -1,4 +1,3 @@
-// core variables for element references
     const isbn = document.getElementById('isbn');
     const nombre = document.getElementById('nombre');
     const autor = document.getElementById('autor');
@@ -11,7 +10,6 @@
         function showToast(message) {
             const toast = document.getElementById('toast');
             toast.innerText = message;
-            toast.classList.add('show');
             setTimeout(() => {
                 toast.classList.remove('show');
             }, 3000);
